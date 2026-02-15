@@ -65,7 +65,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+        policy.WithOrigins("http://localhost:5173", "http://localhost:5174","https://pinga-mi-palo.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -91,7 +91,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors();
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
