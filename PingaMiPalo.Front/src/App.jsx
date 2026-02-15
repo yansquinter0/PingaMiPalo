@@ -55,9 +55,18 @@ function App() {
                     <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', maxWidth: '600px', marginBottom: '2rem' }}>
                       Experience the future of intimacy with our premium selection of toys and accessories. Designed for the modern era.
                     </p>
-                    <button className="btn-primary" onClick={() => document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })}>
-                      Explore Collection
-                    </button>
+                    <button
+  className="btn-primary"
+  onClick={() => {
+    const section = document.getElementById('shop');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }}
+>
+  Explore Collection
+</button>
+
                   </section>
                   <ProductList />
                 </>
