@@ -22,16 +22,22 @@ if (!string.IsNullOrEmpty(databaseUrl))
     // Parse the connection string from the DATABASE_URL environment variable (Postgres format: postgres://user:password@host:port/database)
     var databaseUri = new Uri(databaseUrl);
     var userInfo = databaseUri.UserInfo.Split(':');
+    
     var builderPg = new Npgsql.NpgsqlConnectionStringBuilder
     {
         Host = databaseUri.Host,
         Port = databaseUri.Port,
-        Username = userInfo[0],
-        Password = userInfo[1],
         Database = databaseUri.LocalPath.TrimStart('/'),
         SslMode = Npgsql.SslMode.Require,
         TrustServerCertificate = true
     };
+
+    if (userInfo.Length >= 2)
+    {
+        builderPg.Username = userInfo[0];
+        builderPg.Password = userInfo[1];
+    }
+    
     connectionString = builderPg.ToString();
     
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
