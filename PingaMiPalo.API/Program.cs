@@ -21,7 +21,7 @@ if (!string.IsNullOrEmpty(databaseUrl))
 {
     // Parse the connection string from the DATABASE_URL environment variable (Postgres format: postgres://user:password@host:port/database)
     var databaseUri = new Uri(databaseUrl);
-    var userInfo = databaseUri.UserInfo.Split(':');
+    var userInfo = databaseUri.UserInfo?.Split(':');
     
     var builderPg = new Npgsql.NpgsqlConnectionStringBuilder
     {
@@ -32,7 +32,7 @@ if (!string.IsNullOrEmpty(databaseUrl))
         TrustServerCertificate = true
     };
 
-    if (userInfo.Length >= 2)
+    if (userInfo != null && userInfo.Length >= 2)
     {
         builderPg.Username = userInfo[0];
         builderPg.Password = userInfo[1];
