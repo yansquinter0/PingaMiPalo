@@ -11,13 +11,13 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Final Stability Settings for Render/Linux
-ENV ASPNETCORE_URLS=http://0.0.0.0:8080 \
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 \
+# Stability Settings for Render/Linux
+# Note: We let Render handle the PORT environment variable.
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 \
     DOTNET_gcServer=0 \
     DOTNET_TieredCompilation=0 \
     DOTNET_ReadyToRun=0 \
     DOTNET_EnableWriteXorExecute=0
 
-EXPOSE 8080
+EXPOSE 80
 ENTRYPOINT ["dotnet", "PingaMiPalo.API.dll"]
